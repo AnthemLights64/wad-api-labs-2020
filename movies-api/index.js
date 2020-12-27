@@ -1,5 +1,5 @@
 import session from 'express-session';
-import authenticate from './authenticate';
+import passport from './authenticate';
 import {loadUsers} from './seedData'
 import './db';
 import dotenv from 'dotenv';
@@ -40,12 +40,11 @@ app.use(express.static('public'));
 //configure body-parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
-app.use('/api/movies', moviesRouter);
+app.use(passport.initialize());
+app.use('/api/movies', passport.authenticate('jwt', {session: false}), moviesRouter);
 app.use('/api/genres', genresRouter);
 //Users router
 app.use('/api/users', usersRouter);
-//update /api/Movie route
-app.use('/api/movies', authenticate, moviesRouter);
 app.use(errHandler);
 
 app.listen(port, () => {
