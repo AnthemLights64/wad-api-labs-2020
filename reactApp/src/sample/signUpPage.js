@@ -9,7 +9,7 @@ const SignUpPage = props => {
       setRegistered(true) 
     }
 
-  const { from } = props.location.state || { from: { pathname: "/" } };
+  //const { from } = props.location.state || { from: { pathname: "/" } };
 
   if (registered === true) {
     return <Redirect to="./login" />;
